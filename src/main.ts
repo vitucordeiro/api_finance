@@ -4,13 +4,23 @@
  */
 
 /** Native **/
-import express, {Express, Router} from 'express'
+import express, {Express, Router, json} from 'express'
+import cors from 'cors'
+import { CorsOptions } from 'cors'
 
-/** No-native **/
-import auth from './routes/auth'
-
+/** Routes **/
+import user from './api/user/Routes'
+import bodyParser from 'body-parser'
 /** Interfaces  **/
-import IConfig from './interface/main/IConfig'
+import { IRoutesConfig } from './typings/custom'
+/** Settings **/
+const CorsOptions = {
+    origin:`http://localhost:${process.env.PORT}` || "http://localhost:3333" 
+}
+const routes:IRoutesConfig = { 
+    routes : {user}
+}
+
 
 class main {
     private PORT:string
@@ -21,19 +31,19 @@ class main {
         this.PORT = PORT
         this.Routes = Route || this.Express
         }
-    /**
-     * config
-     */
-    public config() {
-        this.Express.use(this.Routes)
-
-    }
+  
     /**
      * bootstrap
      */
-    public bootstrap({routes}:IConfig) {
+    public bootstrap({routes}:IRoutesConfig) {
         /** Decouple the routes so that it doesn't snowball if one of them goes down **/
-        this.Express.use(routes.auth)
+      
+        this.Express.use(bodyParser.urlencoded({extended:false}))
+        this.Express.use(bodyParser.json())
+        this.Express.use(cors(CorsOptions))
+        
+        this.Express.use(routes.user)
+        
         this.Express.listen(this.PORT, ()=>{
             console.log("Worked")
             console.log("Server listening on " + this.PORT)
@@ -42,10 +52,7 @@ class main {
     }
 }
 
-const config:IConfig = { 
-    routes : {auth}
-}
 
 const PORT: any = process.env.PORT || "3333"
 const initial = new main(PORT )
-initial.bootstrap(config)
+initial.bootstrap(routes)
