@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { registerHandler } from "./Controller";
+import { registerHandler } from "./Controllers";
 
 /** Setup  */
 const user = Router()
