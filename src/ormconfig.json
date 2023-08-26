@@ -1,0 +1,18 @@
+{
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "seu_usuario",
+    "password": "sua_senha",
+    "database": "nome_do_banco_de_dados",
+    "synchronize": true,
+    "logging": true,
+    "entities": ["src/api/user/models/**/*.ts","src/api/bank/models/**/*.ts"],
+    "migrations": ["src/api/migrations/**/*.ts"],
+    "subscribers": ["src/subscribers/**/*.ts"],
+    "cli": {
+      "entitiesDir": "src/models",
+      "migrationsDir": "src/migrations",
+      "subscribersDir": "src/subscribers"
+    }
+  }
