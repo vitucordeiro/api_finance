@@ -1,6 +1,9 @@
-
+import {Express} from Express
 export interface IRoutesConfig {
-    routes : any
+    routes : Express || null
 }
 
+export interface ITypeAuthentication{
+    authentication: string || null
+}
 
