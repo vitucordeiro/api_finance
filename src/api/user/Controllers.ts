@@ -15,6 +15,7 @@ export const registerHandler = (Request:express.Request, Response:express.Respon
         Next()
         return Response.json({data:{filterData}})
     }catch(error){
+        Throw New Error("Don't any data")
         return Response.json(error)
     }
    
