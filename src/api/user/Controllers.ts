@@ -12,7 +12,6 @@ export const registerHandler = (Request:express.Request, Response:express.Respon
             password: password.replace(/\s+/g, ''),
             email: email.replace(/\s+/g, '')
         }
-        Next()
         return Response.json({data:{filterData}})
     }catch(error){
         return Response.json(error)

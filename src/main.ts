@@ -2,19 +2,11 @@
 /**
  * Imports
  */
-import 'reflect-metadata'
 
 /** Native **/
-import express, {Express, Router, json} from 'express'
+import express, {Express} from 'express'
 import cors from 'cors'
-import { CorsOptions } from 'cors'
 
-
-const Cors = cors({
-    allowedHeaders:"*",
-    origin:"*",
-    
-})
 /** Routes **/
 import user from './api/user/Routes'
 import bodyParser from 'body-parser'
@@ -22,8 +14,8 @@ import bodyParser from 'body-parser'
 import { IRoutesConfig } from './typings/custom'
 /** Settings **/
 
-const routes:IRoutesConfig = { 
-    routes : {user}
+const routes = { 
+    routes : user
 }
 
 
@@ -46,6 +38,7 @@ class main {
                 origin:"*",
                 allowedHeaders:["GET", "POST", "DELETE", "PUT"]
             }))
+            
         }
     /**
      * bootstrap
@@ -54,8 +47,8 @@ class main {
         /** Decouple the routes so that it doesn't snowball if one of them goes down **/
         this.config()
   
+        this.Express.use(routes)
         
-        this.Express.use(routes.user)
         
         this.Express.listen(this.PORT, ()=>{
             console.log("Worked")
@@ -66,6 +59,6 @@ class main {
 }
 
 
-const PORT: any = process.env.PORT || "3333"
-const initial = new main(PORT )
+const PORT: string = process.env.PORT || "3333"
+const initial = new main(PORT)
 initial.bootstrap(routes)
