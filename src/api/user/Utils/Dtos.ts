@@ -1,6 +1,7 @@
 export default interface userDTO {
-    fullName: string
-    password: string
+    first_name: string
+    last_name: string
+    complete_name:string,
+    password:string,
     email:string
-
 } 

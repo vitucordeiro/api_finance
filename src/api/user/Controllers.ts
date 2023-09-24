@@ -1,18 +1,19 @@
 import express from 'express'
-import  userDTO  from './Utils/Dtos'
 import { userSchema } from './Utils/Schemas'
 export const registerHandler = (Request:express.Request, Response:express.Response, Next:express.NextFunction)=>{
     try{
-        const {fullName, password, email}:userDTO = userSchema.parse(Request.body)
+        const {first_name, last_name, complete_name, password, email} = userSchema.parse(Request.body)
         
         //This Regex, if you don't know Regex, removes spaces inside any incoming string
         
         const filterData = {
-            fullName: fullName.replace(/\s+/g, ''),
+            first_name: first_name.replace(/\s+/g, ''),
+            last_name: last_name.replace(/\s+/g, ''),
+            complete_name: complete_name.replace(/\s+g/g, ''),
             password: password.replace(/\s+/g, ''),
             email: email.replace(/\s+/g, '')
         }
-        return Response.json({data:{filterData}})
+        Next(filterData)
     }catch(error){
         return Response.json(error)
     }

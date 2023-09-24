@@ -1,5 +1,6 @@
-CREATE TABLE user (
-    user_id         INT uuid_generate_v4(),
+
+CREATE TABLE users (
+    user_id         UUID DEFAULT gen_random_uuid() NOT NULL,
     fist_name       VARCHAR(50) ,
     last_name       VARCHAR(50) ,
     complete_name   VARCHAR(50) ,
@@ -18,13 +19,15 @@ CREATE TABLE user (
  )
 );
 CREATE TABLE post (
-    post_id         INT uuid_generate_v4(),
+    post_id         UUID DEFAULT gen_random_uuid() NOT NULL,
     user_id         INT,
     content         TEXT NOT NULL,
-    data_post       DATE NOT NULL DEFAULT CURRENT_DATE  
-
+    created_date    DATE NOT NULL DEFAULT CURRENT_DATE,
+    update_date     DATE DEFAULT NULL,
+    likes           INT,  
+    commentaries    TEXT[] DEFAULT ARRAY[]::TEXT[] , 
     PRIMARY KEY(post_id),
     CONSTRAINT fk_user
         FOREIGN KEY(user_id)
-            REFERENCES user(user_id)
+            REFERENCES users (user_id)    
 );
